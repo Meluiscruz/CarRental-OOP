@@ -164,7 +164,10 @@ public:
 
 int main(){
 	CarRentalManagement a;
-	a.GetInfo();
-	a.PrintBill();
+	/*a.GetInfo();
+	a.PrintBill();*/
+	/*You lil bitch*/;
+
+
 	return 0;
 }
