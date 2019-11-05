@@ -168,8 +168,11 @@ int main(){
 	CarRentalManagement a;
 	a.GetInfo();
 	a.PrintBill();
+<<<<<<< HEAD
 
 >>>>>>> e58e8a3caf036d4fcf57177ab454788ec79449d0
 
+=======
+>>>>>>> d52511d478ff8d6b07416a97c4f2fd7e51112762
 	return 0;
 }
