@@ -163,6 +163,13 @@ public:
 
 
 int main(){
+<<<<<<< HEAD
+=======
+	CarRentalManagement a;
+	a.GetInfo();
+	a.PrintBill();
+
+>>>>>>> e58e8a3caf036d4fcf57177ab454788ec79449d0
 
 	return 0;
 }
