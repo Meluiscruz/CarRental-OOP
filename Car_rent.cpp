@@ -164,8 +164,8 @@ public:
 
 int main(){
 	CarRentalManagement a;
-	/*a.GetInfo();
-	a.PrintBill();*/
+	a.GetInfo();
+	a.PrintBill();
 
 
 	return 0;
