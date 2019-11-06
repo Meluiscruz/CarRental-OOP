@@ -12,9 +12,9 @@ public:
 	void setID(string _ID){ID = _ID;}
     string getID(){return ID;}
 	virtual void Print2Console() = 0;
-	/*virtual void serviceEngine() = 0;
+	virtual void serviceEngine() = 0;
 	virtual void serviceTransmission() = 0;
-	virtual void serviceTires() = 0;*/
+	virtual void serviceTires() = 0;
 };
 
 /*
@@ -35,7 +35,7 @@ public:
 		cout << "Rented Days: \t\t" << days << endl;
 		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
 	}
-	/*void serviceEngine() {
+	void serviceEngine() {
 
 	}
 	void serviceTransmission() {
@@ -43,7 +43,7 @@ public:
 	}
 	void serviceTires() {
 
-	}*/
+	}
 };
 
 struct Dimension{
@@ -71,6 +71,16 @@ public:
 		cout << "Rented Days: \t\t" << days << endl;
 		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
 	}
+	void serviceEngine() {
+
+	}
+	void serviceTransmission() {
+
+	}
+	void serviceTires() {
+
+	}
+
 
 };
 
@@ -95,11 +105,22 @@ public:
 		cout << "Rented Days: \t\t" << days << endl;
 		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
 	}
+	void serviceEngine() {
+
+	}
+	void serviceTransmission() {
+
+	}
+	void serviceTires() {
+
+	}
+
 };
 
 struct Record{
 	double mileage;
-	string engine_cond;
+	int engine_cond;
+	int tires_cond;
 };
 
 class CarRentalManagement{
@@ -124,7 +145,9 @@ public:
 		cin >> identityNumber;
 		cout << "Phone number: ";
 		cin >> PhoneNumber;
-		cout << "Choose the type of car you want to rent: 1.Sedan, 2.PickUp, 3.SUV" << endl;
+	}
+	void GetRentedInfo() {
+		cout << "Choose the type of car you want to rent: 1.Sedan  2.PickUp  3.SUV" << endl;
 		cout << "Your choice: "; cin >> carType;
 		cout << "How many days you rented: ";
 		cin >> days;
@@ -132,6 +155,26 @@ public:
 		cin >> ID;
 		cout << "Choose color: ";
 		cin >> color;
+	}
+	void addCar() {
+		cout << "Do you want to rent more car?" << endl;
+		int yesno;
+		cout << "Yes (1) / No (0): "; cin >> yesno;
+		if(yesno == 1) {
+			cout << "How many you want to rent? : ";
+			int n;
+			cin >> n;
+			CarRentalManagement* carArr = new CarRentalManagement[n];
+			for(int i = 0; i < n; i++) {
+				carArr[i].name = name;
+				carArr[i].age = age;
+				carArr[i].ID = ID;
+				carArr[i].PhoneNumber = PhoneNumber;
+				carArr[i].GetRentedInfo();
+				cout << "Thanks for using our service, here is your bill." << endl;
+				carArr[i].PrintBill();
+			}
+		} else cout << "Thanks for using our service, here is your bill." << endl;
 	}
 	void PrintBill() {
 		cout << "------------------------------------" << endl;
@@ -154,7 +197,9 @@ public:
 		}
 		cout << "------------------------------------" << endl;
 	}
-	void ServiceFleet();
+	void ServiceFleet() {
+		
+	}
 };
 
 //
@@ -164,10 +209,10 @@ public:
 
 int main(){
 	CarRentalManagement a;
-	/*a.GetInfo();
-	a.PrintBill();*/
-	/*You lil bitch*/;
-
+	a.GetInfo();
+	a.GetRentedInfo();
+	a.PrintBill();
+	a.addCar();
 
 	return 0;
 }
