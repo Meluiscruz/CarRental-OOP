@@ -9,8 +9,6 @@ protected:
 	string color;
 public:
 	Vehicle(int _days, string _ID, string _color): days(_days), ID(_ID), color(_color) {};
-	void setID(string _ID){ID = _ID;}
-    string getID(){return ID;}
 	virtual void Print2Console() = 0;
 	virtual void serviceEngine() = 0;
 	virtual void serviceTransmission() = 0;
@@ -22,10 +20,10 @@ public:
  */
 
 class Sedan : public Vehicle {
-private:
+protected:
 	double trunk_cap;
-	int cost = 1000;
 public:
+	int cost;
 	Sedan(int _days, string _ID, string _color, double _trunk_cap) : Vehicle(_days, _ID, _color), trunk_cap(_trunk_cap) {}
 	void Print2Console() {
 		cout << "Car Type: \t\tSedan" << endl;
@@ -33,7 +31,8 @@ public:
 		cout << "Color: \t\t\t" << color << endl;
 		cout << "Trunk Capacity: \t" << trunk_cap << endl;
 		cout << "Rented Days: \t\t" << days << endl;
-		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
+		cost = days * 1000;
+		cout << "Price: \t\t" << cost << " (USD)" << endl;
 	}
 	void serviceEngine() {
 
@@ -53,10 +52,10 @@ struct Dimension{
 };
 
 class PickUp : public Vehicle {
-private:
+protected:
 	Dimension trunk_dim;
-	int cost = 1500;
 public:
+	int cost;
 	void GetDim(int _width, int _length, int _height) {
 		trunk_dim.width = _width;
 		trunk_dim.length = _length;
@@ -69,7 +68,8 @@ public:
 		cout << "Color: \t\t\t" << color << endl;
 		cout << "Trunk Dimension: \t" << trunk_dim.width << " x " << trunk_dim.length << " x " << trunk_dim.height << " (m)" << endl;
 		cout << "Rented Days: \t\t" << days << endl;
-		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
+		cost = days * 1500;
+		cout << "Price: \t\t" << cost << " (USD)" << endl;
 	}
 	void serviceEngine() {
 
@@ -85,9 +85,10 @@ public:
 };
 
 class SUV : public Vehicle {
+protected:
 	int seats;
-	int cost = 2000;
 public:
+	int cost;
 	bool isFourSeat() {
 		if(seats == 4)
 			return true;
@@ -103,7 +104,8 @@ public:
 			cout << "Yes" << endl;
 		else cout << "No" << endl;
 		cout << "Rented Days: \t\t" << days << endl;
-		cout << "Total price: \t\t" << cost * days << " (USD)" << endl;
+		cost = days * 2000;
+		cout << "Price: \t\t" << cost << " (USD)" << endl;
 	}
 	void serviceEngine() {
 
@@ -129,11 +131,13 @@ protected:
 	int age;
 	int identityNumber;
 	int PhoneNumber;
-	int DrivingExpe;
 	int carType;
 	int days;
 	string ID;
 	string color;
+	int moreCar;
+	CarRentalManagement* carArr;
+	int TotalPrice;
 	Record VehicleHistory;
 public:
 	void GetInfo() {
@@ -148,7 +152,8 @@ public:
 	}
 	void GetRentedInfo() {
 		cout << "Choose the type of car you want to rent: 1.Sedan  2.PickUp  3.SUV" << endl;
-		cout << "Your choice: "; cin >> carType;
+		cout << "Your choice: "; 
+		cin >> carType;
 		cout << "How many days you rented: ";
 		cin >> days;
 		cout << "Car's ID in the database: ";
@@ -157,44 +162,43 @@ public:
 		cin >> color;
 	}
 	void addCar() {
-		cout << "Do you want to rent more car?" << endl;
-		int yesno;
-		cout << "Yes (1) / No (0): "; cin >> yesno;
-		if(yesno == 1) {
-			cout << "How many you want to rent? : ";
-			int n;
-			cin >> n;
-			CarRentalManagement* carArr = new CarRentalManagement[n];
-			for(int i = 0; i < n; i++) {
-				carArr[i].name = name;
-				carArr[i].age = age;
-				carArr[i].ID = ID;
-				carArr[i].PhoneNumber = PhoneNumber;
-				carArr[i].GetRentedInfo();
-				cout << "Thanks for using our service, here is your bill." << endl;
-				carArr[i].PrintBill();
-			}
-		} else cout << "Thanks for using our service, here is your bill." << endl;
+		cout << "How many car you want to rent? : ";
+		cin >> moreCar;
+		carArr = new CarRentalManagement[moreCar];
+		for(int i = 0; i < moreCar; i++) {
+			carArr[i].GetRentedInfo();
+		}
 	}
 	void PrintBill() {
+		TotalPrice = 0;
 		cout << "------------------------------------" << endl;
 		cout << "             TOTAL BILL             " << endl;
 		cout << "Name: \t\t\t" << name << endl;
 		cout << "Age: \t\t\t" << age << endl;
 		cout << "Identity number: \t" << identityNumber << endl;
 		cout << "Phone number: \t\t" << PhoneNumber << endl;
-		if(carType == 1) {
-			int trunk_cap = 10;
-			Sedan myCar(days, ID, color, trunk_cap);
-			myCar.Print2Console();
-		} else if(carType == 2) {
-			PickUp myCar(days, ID, color);
-			myCar.GetDim(1, 2, 3);
-			myCar.Print2Console();
-		} else if(carType == 3) {
-			SUV myCar(days, ID, color, 4);
-			myCar.Print2Console();
+		cout << "Number of cars rented: " << moreCar + 1 << endl;
+		cout << "..." <<endl;
+
+		for(int i = 0; i < moreCar; i++) {
+			if(carArr[i].carType == 1) {
+				int trunk_cap = 10;
+				Sedan myCar(carArr[i].days, carArr[i].ID, carArr[i].color, trunk_cap);
+				myCar.Print2Console();
+				TotalPrice += myCar.cost;
+			} else if(carArr[i].carType == 2) {
+				PickUp myCar(carArr[i].days, carArr[i].ID, carArr[i].color);
+				myCar.GetDim(1, 2, 3);
+				myCar.Print2Console();
+				TotalPrice += myCar.cost;
+			} else if(carArr[i].carType == 3) {
+				SUV myCar(carArr[i].days, carArr[i].ID, carArr[i].color, 4);
+				myCar.Print2Console();
+				TotalPrice += myCar.cost;
+			}
+		cout << endl;
 		}
+		cout << "Total Price: \t\t" << TotalPrice << " (USD)" << endl;
 		cout << "------------------------------------" << endl;
 	}
 	void ServiceFleet() {
@@ -210,9 +214,8 @@ public:
 int main(){
 	CarRentalManagement a;
 	a.GetInfo();
-	a.GetRentedInfo();
-	a.PrintBill();
 	a.addCar();
+	a.PrintBill();
 
 	return 0;
 }
