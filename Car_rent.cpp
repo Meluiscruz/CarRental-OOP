@@ -4,14 +4,27 @@
 
 using namespace std;
 
+struct ServiceHistory {
+	string record;
+	ServiceHistory(string _record) : record(_record) {};
+};
+
 class Vehicle {
 protected:
 	int days;
 	string ID;
 	string color;
+	vector <ServiceHistory*> VehicleHistory;
 public:
 	int cost;
 	Vehicle(int _days, string _ID, string _color): days(_days), ID(_ID), color(_color) {};
+
+	void showHistory() {
+		int size = VehicleHistory.size();
+		for(int i = 0; i < size; i++) {
+			cout << VehicleHistory[i]->record << "   ";
+		}
+	}
 
 	virtual void Print2Console() = 0;
 	virtual void serviceEngine() = 0;
@@ -23,16 +36,11 @@ public:
  *	
  */
 
-struct Record{
-	double mileage;
-	int engine_cond;
-	int tires_cond;
-};
+
 
 class Sedan : public Vehicle {
 protected:
 	double trunk_cap;
-	Record VehicleHistory;
 public:
 	Sedan(int _days, string _ID, string _color, double _trunk_cap) : Vehicle(_days, _ID, _color), trunk_cap(_trunk_cap) {}
 
@@ -45,30 +53,55 @@ public:
 		cost = days * 1000;
 		cout << "Price: \t\t\t" << cost << " (USD)" << endl;
 	}
+
 	void serviceEngine() {
-		cout << endl;
 		int choice;
 		cout << "This is our Engine service. What do you want for your Sedan?" << endl;
 		cout << "(1.Oil change, 2.Minor, 3.Major)" << endl;
 		cout << "Your choice: ";
 		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Oil change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Major");
+			VehicleHistory.push_back(temp);
+		}
 	}
+
 	void serviceTransmission() {
-		cout << endl;
 		int choice;
 		cout << "This is our Transmission service. What do you want for your Sedan?" << endl;
 		cout << "(1.Fluid change, 2.Minor, 3.Overhaul)" << endl;
 		cout << "Your choice: ";
 		cin >> choice;
-
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Fluid change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Overhaul");
+			VehicleHistory.push_back(temp);
+		}
 	}
 	void serviceTires() {
-		cout << endl;
 		int choice;
 		cout << "This is our Tires service. What do you want for your Sedan?" << endl;
 		cout << "(1.Adjustment, 2.Replacement)" << endl;
 		cout << "Your choice: ";
 		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Adjustment");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Replacement");
+			VehicleHistory.push_back(temp);
+		}
 	}
 };
 
@@ -81,7 +114,6 @@ struct Dimension{
 class PickUp : public Vehicle {
 protected:
 	Dimension trunk_dim;
-	Record VehicleHistory;
 public:
 	void GetDim(int _width, int _length, int _height) {
 		trunk_dim.width = _width;
@@ -101,20 +133,61 @@ public:
 	}
 
 	void serviceEngine() {
-
+		int choice;
+		cout << "This is our Engine service. What do you want for your Pick Up?" << endl;
+		cout << "(1.Oil change, 2.Minor, 3.Major)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Oil change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Major");
+			VehicleHistory.push_back(temp);
+		}
 	}
+
 	void serviceTransmission() {
-
+		int choice;
+		cout << "This is our Transmission service. What do you want for your Pick Up?" << endl;
+		cout << "(1.Fluid change, 2.Minor, 3.Overhaul)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Fluid change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Overhaul");
+			VehicleHistory.push_back(temp);
+		}
 	}
-	void serviceTires() {
 
+	void serviceTires() {
+		int choice;
+		cout << "This is our Tires service. What do you want for your Pick Up?" << endl;
+		cout << "(1.Adjustment, 2.Replacement)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Adjustment");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Replacement");
+			VehicleHistory.push_back(temp);
+		}
 	}
 };
 
 class SUV : public Vehicle {
 protected:
 	int seats;
-	Record VehicleHistory;
+	//vector <ServiceHistory*> VehicleHistory;
 public:
 	bool isFourSeat() {
 		if(seats == 4)
@@ -134,14 +207,56 @@ public:
 		cost = days * 2000;
 		cout << "Price: \t\t\t" << cost << " (USD)" << endl;
 	}
+
 	void serviceEngine() {
-
+		int choice;
+		cout << "This is our Engine service. What do you want for your SUV?" << endl;
+		cout << "(1.Oil change, 2.Minor, 3.Major)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Oil change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Major");
+			VehicleHistory.push_back(temp);
+		}
 	}
+
 	void serviceTransmission() {
-
+		int choice;
+		cout << "This is our Transmission service. What do you want for your SUV?" << endl;
+		cout << "(1.Fluid change, 2.Minor, 3.Overhaul)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Fluid change");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Minor");
+			VehicleHistory.push_back(temp);
+		} else if(choice == 3) {
+			ServiceHistory* temp = new ServiceHistory("Overhaul");
+			VehicleHistory.push_back(temp);
+		}
 	}
-	void serviceTires() {
 
+	void serviceTires() {
+		int choice;
+		cout << "This is our Tires service. What do you want for your SUV?" << endl;
+		cout << "(1.Adjustment, 2.Replacement)" << endl;
+		cout << "Your choice: ";
+		cin >> choice;
+		if(choice == 1) {
+			ServiceHistory* temp = new ServiceHistory("Adjustment");
+			VehicleHistory.push_back(temp);
+		} else if (choice == 2) {
+			ServiceHistory* temp = new ServiceHistory("Replacement");
+			VehicleHistory.push_back(temp);
+		}
 	}
 
 };
@@ -231,14 +346,14 @@ public:
 
 	void ServiceFleet() {
 		cout << "      Car Service       " << endl;
-		cout << "Tell us about your car's status: " << endl;
 		for(int i = 0; i < moreCar; i++) {
+			cout << "Tell us about your car[" << i + 1 << "]'s status: " << endl;
 			cout << "1.Bad  2.Normal  3.Good" << endl;
 			cout << "Your car's tires condition: ";
 			cin >> tires_cond;
 			cout << "Your car's engine condition: ";
 			cin >> engine_cond;
-			cout << "Travled distance (miles): ";
+			cout << "Traveled distance (miles): ";
 			cin >> mileage;
 
 			// TIRES' CONDITION
@@ -281,21 +396,29 @@ public:
 			if(mileage > 3000) 
 				Contracts[i]->serviceTransmission();
 			else cout << "Your car is still good in transmission, comeback later" << endl;
+			cout << endl;
 		}
 	}
+	void show() {
+		for(int i = 0; i < moreCar; i++) {
+			cout << "Car " << i + 1 << ": ";
+			Contracts[i]->showHistory();
+			cout << endl;
+		}
+	}
+	
 };
 
-//
-//
-//
+
+
 
 
 int main(){
 	CarRentalManagement a;
-	//a.GetInfo();
+	a.GetInfo();
 	a.AskforAmount();
-	//a.PrintBill();
+	a.PrintBill();
 	a.ServiceFleet();
-
+	a.show();
 	return 0;
 }
