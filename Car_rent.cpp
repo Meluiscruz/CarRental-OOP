@@ -342,8 +342,6 @@ public:
 		cout << "------------------------------------" << endl;
 	}
 
-	
-
 	void ServiceFleet() {
 		cout << "      Car Service       " << endl;
 		for(int i = 0; i < moreCar; i++) {
@@ -401,7 +399,7 @@ public:
 	}
 	void show() {
 		for(int i = 0; i < moreCar; i++) {
-			cout << "Car " << i + 1 << ": ";
+			cout << "Car " << i + 1 << ":";
 			Contracts[i]->showHistory();
 			cout << endl;
 		}
