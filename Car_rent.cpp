@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include "rapidjson/document.h"
 
 using namespace std;
 
@@ -187,7 +187,6 @@ public:
 class SUV : public Vehicle {
 protected:
 	int seats;
-	//vector <ServiceHistory*> VehicleHistory;
 public:
 	bool isFourSeat() {
 		if(seats == 4)
@@ -286,7 +285,6 @@ public:
 		cin >> PhoneNumber;
 	}
 
-
 	void AskforAmount() {
 		cout << "How many car you want to rent? : ";
 		cin >> moreCar;
@@ -331,11 +329,12 @@ public:
 		cout << "Age: \t\t\t" << age << endl;
 		cout << "Identity number: \t" << identityNumber << endl;
 		cout << "Phone number: \t\t" << PhoneNumber << endl;
-		cout << "Number of cars rented: \t" << moreCar + 1 << endl;
+		cout << "Number of cars rented: \t" << moreCar << endl;
 		cout << "..." << endl;
 		for(int i = 0; i < moreCar; i++) {
 			Contracts[i]->Print2Console();
 			TotalPrice += Contracts[i]->cost;
+			cout << endl;
 		}
 		
 		cout << "Total Price: \t\t" << TotalPrice << " (USD)" << endl;
@@ -393,30 +392,107 @@ public:
 			cout << endl;
 			if(mileage > 3000) 
 				Contracts[i]->serviceTransmission();
-			else cout << "Your car is still good in transmission, comeback later" << endl;
+			else cout << "Your car is still good in transmission, comeback later!" << endl;
 			cout << endl;
 		}
 	}
+
 	void show() {
 		for(int i = 0; i < moreCar; i++) {
-			cout << "Car " << i + 1 << ":";
+			cout << "Car " << i + 1 << ":  ";
 			Contracts[i]->showHistory();
 			cout << endl;
 		}
 	}
-	
 };
 
+struct Date {
+	int day;
+	int month;
+	int year;
 
+	bool operator == (Date const &that) {
+		if(year == that.year && month == that.month && day == that.day)
+			return true;
+		else return false;
+	}
 
+	bool operator < (Date const &that) {
+		if(year < that.year)
+			return true;
+		else if(year == that.year) {
+			if(month < that.month)
+				return true;
+			else if(month == that.month) {
+				if(day < that.day)
+					return true;
+				else return false;
+			}
+			else return false;
+		}
+		else return false;
+	}
 
+	bool operator > (Date const &that) {
+		if(year > that.year)
+			return true;
+		else if(year == that.year) {
+			if(month > that.month)
+				return true;
+			else if(month == that.month) {
+				if(day > that.day)
+					return true;
+				else return false;
+			}
+			else return false;
+		}
+		else return false;
+	}
+};
+
+class BookandRent : public CarRentalManagement {
+protected:
+	Date Book_Date;
+	Date Return_Date;
+public:
+	void setTime() {
+		cout << "You want to take the car from (dd/mm/yyyy): ";
+		cin >> Book_Date.day;
+		cin >> Book_Date.month;
+		cin >> Book_Date.year;
+		
+		cout << "And return at (dd/mm/yyyy): ";
+		cin >> Return_Date.day;
+		cin >> Return_Date.month;
+		cin >> Return_Date.year;
+		
+		cout << "From : " << Book_Date.day << "/" << Book_Date.month << "/" << Book_Date.year;
+		cout << " to " << Return_Date.day << "/" << Return_Date.month << "/" << Return_Date.year;
+	}
+	void compare() {
+		if(Book_Date == Return_Date)
+			cout << endl << "equal";
+		else if(Book_Date < Return_Date)
+			cout << endl << "smaller";
+		else if(Book_Date > Return_Date)
+			cout << endl << "bigger";
+	}
+};
+
+class MaintenanceJob {
+
+};
 
 int main(){
 	CarRentalManagement a;
-	a.GetInfo();
-	a.AskforAmount();
-	a.PrintBill();
-	a.ServiceFleet();
-	a.show();
+	//a.GetInfo();
+	//a.AskforAmount();
+	//a.PrintBill();
+	//a.ServiceFleet();
+	//a.show();
+	BookandRent b;
+	b.setTime();
+	b.compare();
+
 	return 0;
 }
